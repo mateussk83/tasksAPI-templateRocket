@@ -142,6 +142,8 @@ app.delete("/todos/:id",checksExistsUserAccount, (request, response) => {
  return response.status(200).json(user.todos) 
 })
 
-
+app.get("/users", (request, response) => {
+  return response.status(200).json(users)
+})
 
 app.listen(3333);
