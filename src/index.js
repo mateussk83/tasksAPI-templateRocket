@@ -69,9 +69,6 @@ app.post('/users', (request, response) => {
   if(userNameAlreadyExists) {
     return response.status(400).json({error:"UserName Already Exists!"})
   }
-  if(nameAlreadyExists) {
-    return response.status(400).json({error:"Name Already Exists!"})
-  }
 
   users.push({
     name,
@@ -142,8 +139,5 @@ app.delete("/todos/:id",checksExistsUserAccount, (request, response) => {
  return response.status(200).json(user.todos) 
 })
 
-app.get("/users", (request, response) => {
-  return response.status(200).json(users)
-})
 
 app.listen(3333);
