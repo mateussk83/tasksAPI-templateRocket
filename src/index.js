@@ -58,23 +58,21 @@ function checksExistsUserAccount(request, response, next) {
 app.post('/users', (request, response) => {
   const { name, username } = request.body;
 
-  const userNameAlreadyExists = users.some(
-    (user) => user.username === username
-  )
+  const userAlreadyExists = users.find(user => user.username === username);
 
-  if(userNameAlreadyExists) {
+  if(userAlreadyExists) {
     return response.status(400).json({error:"UserName Already Exists!"})
   }
 
 
-  users.push({
+  const user = {
+    id: uuidv4(),
     name,
     username,
-    id: uuidv4(),
-    todos: []
-  })
-
-  return response.status(201).send(users);
+    todos: [],
+}
+users.push(user);
+return response.status(201).json(user);
 });
 
 app.get('/todos',checksExistsUserAccount, (request, response) => {
@@ -136,8 +134,4 @@ app.delete("/todos/:id",checksExistsUserAccount, (request, response) => {
  return response.status(200).json(user.todos) 
 })
 
-app.get("/users", (request,response) => {
-  return response.json(users)
-})
-
-app.listen(3333);
+app.listen(3333); 
